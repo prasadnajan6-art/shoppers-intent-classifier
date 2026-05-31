@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shopper Intent Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',sans-serif;background:#f0f4f8;color:#1a202c;min-height:100vh;padding:24px;}
+    .dash-root{max-width:1100px;margin:0 auto;}
+    .top-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;}
+    .top-bar h1{font-size:20px;font-weight:600;}
+    .top-bar p{font-size:12px;color:#718096;margin-top:3px;}
+    .pill{font-size:11px;padding:5px 14px;border-radius:20px;background:#ebf4ff;color:#2b6cb0;font-weight:600;}
+    .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:1.25rem;}
+    .metric{background:white;border:1px solid #e2e8f0;border-radius:10px;padding:14px 16px;}
+    .metric-label{font-size:11px;color:#718096;margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em;}
+    .metric-value{font-size:24px;font-weight:600;color:#1a202c;}
+    .metric-sub{font-size:11px;color:#a0aec0;margin-top:2px;}
+    .mid-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+    .card{background:white;border:1px solid #e2e8f0;border-radius:12px;padding:18px;}
+    .card-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:#4a5568;margin-bottom:14px;}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+    .field label{display:block;font-size:11px;color:#718096;margin-bottom:4px;}
+    .field input,.field select{width:100%;padding:7px 10px;border:1px solid #cbd5e0;border-radius:7px;font-size:12px;background:#f7fafc;outline:none;}
+    .field input:focus,.field select:focus{border-color:#3182ce;background:white;}
+    .predict-btn{width:100%;background:#1e3a5f;color:white;border:none;border-radius:8px;padding:11px;font-size:13px;font-weight:600;cursor:pointer;margin-top:10px;transition:background .2s;}
+    .predict-btn:hover{background:#2a4a7f;}
+    .predict-btn:disabled{background:#a0aec0;cursor:not-allowed;}
+    .result-box{display:none;margin-top:12px;background:#f7fafc;border-radius:8px;padding:14px;text-align:center;}
+    .result-box.show{display:block;}
+    .result-emoji{font-size:28px;}
+    .result-lbl{font-size:17px;font-weight:600;margin:4px 0 2px;}
+    .result-lbl.buy{color:#276749;}
+    .result-lbl.nobuy{color:#c53030;}
+    .bar-row{display:flex;justify-content:space-between;font-size:11px;color:#718096;margin:10px 0 4px;}
+    .bar-track{height:8px;background:#e2e8f0;border-radius:4px;overflow:hidden;}
+    .bar-fill{height:100%;border-radius:4px;transition:width .7s ease;}
+    .bar-fill.buy{background:#38a169;}
+    .bar-fill.nobuy{background:#e53e3e;}
+    .prob-row{display:flex;justify-content:space-between;margin-top:10px;font-size:12px;color:#718096;}
+    .prob-row span:last-child{font-weight:600;color:#1a202c;}
+    .demo-tag{display:none;font-size:10px;margin-top:8px;background:#fffbeb;color:#b7791f;border-radius:6px;padding:5px 8px;}
+    .bar-chart-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:11px;}
+    .bc-label{width:100px;text-align:right;color:#718096;flex-shrink:0;}
+    .bc-track{flex:1;height:18px;background:#f0f4f8;border-radius:3px;overflow:hidden;}
+    .bc-fill{height:100%;border-radius:3px;background:#1e3a5f;transition:width 1s;}
+    .bc-val{width:36px;font-weight:600;color:#1a202c;}
+    .tip-row{display:flex;justify-content:space-between;font-size:12px;padding:7px 0;border-bottom:1px solid #f0f4f8;}
+    .tip-row:last-child{border-bottom:none;}
+    .tip-k{color:#718096;}
+    .tip-v{font-weight:500;}
+    .bottom-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+  </style>
+</head>
+<body>
+<div class="dash-root">
+
+  <div class="top-bar">
+    <div>
+      <h1><i class="ti ti-shopping-cart" style="font-size:20px;vertical-align:-3px;margin-right:7px"></i>Shopper Intent Dashboard</h1>
+      <p>Online Shoppers Purchasing Intention · UCI Dataset · Decision Tree Classifier</p>
+    </div>
+    <span class="pill"><i class="ti ti-chart-bar" style="font-size:13px;vertical-align:-1px;margin-right:4px"></i>~88% Accuracy</span>
+  </div>
+
+  <div class="metrics">
+    <div class="metric"><div class="metric-label">Dataset size</div><div class="metric-value">12,330</div><div class="metric-sub">sessions</div></div>
+    <div class="metric"><div class="metric-label">Purchase rate</div><div class="metric-value">15.5%</div><div class="metric-sub">of all sessions</div></div>
+    <div class="metric"><div class="metric-label">Model accuracy</div><div class="metric-value">88.1%</div><div class="metric-sub">on test set</div></div>
+    <div class="metric"><div class="metric-label">F1 score</div><div class="metric-value">67.2%</div><div class="metric-sub">purchase class</div></div>
+  </div>
+
+  <div class="mid-grid">
+    <div class="card">
+      <div class="card-title"><i class="ti ti-adjustments-horizontal" style="font-size:13px;vertical-align:-1px;margin-right:4px"></i>Run a prediction</div>
+      <div class="form-row">
+        <div class="field"><label>Product pages visited</label><input type="number" id="d_pr" value="15" min="0"/></div>
+        <div class="field"><label>Product duration (s)</label><input type="number" id="d_prd" value="600" min="0"/></div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label>Page values</label><input type="number" id="d_pv" value="20" step="0.1" min="0"/></div>
+        <div class="field"><label>Bounce rate (0–1)</label><input type="number" id="d_br" value="0.02" step="0.01" min="0" max="1"/></div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label>Exit rate (0–1)</label><input type="number" id="d_er" value="0.04" step="0.01" min="0" max="1"/></div>
+        <div class="field"><label>Special day (0–1)</label><input type="number" id="d_sd" value="0" step="0.2" min="0" max="1"/></div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label>Month</label>
+          <select id="d_mo"><option>Jan</option><option>Feb</option><option>Mar</option><option>Apr</option><option>May</option><option>Jun</option><option>Jul</option><option>Aug</option><option>Sep</option><option>Oct</option><option selected>Nov</option><option>Dec</option></select>
+        </div>
+        <div class="field"><label>Visitor type</label>
+          <select id="d_vt"><option selected>Returning_Visitor</option><option>New_Visitor</option><option>Other</option></select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label>Admin pages</label><input type="number" id="d_adm" value="2" min="0"/></div>
+        <div class="field"><label>Info pages</label><input type="number" id="d_inf" value="0" min="0"/></div>
+      </div>
+      <button class="predict-btn" id="d_btn" onclick="dPredict()"><i class="ti ti-player-play" style="font-size:13px;vertical-align:-1px;margin-right:4px"></i>Run prediction</button>
+      <div class="result-box" id="d_result">
+        <div class="result-emoji" id="d_emoji">🤔</div>
+        <div class="result-lbl" id="d_lbl">—</div>
+        <div class="bar-row"><span>Confidence</span><span id="d_conf_pct">—</span></div>
+        <div class="bar-track"><div class="bar-fill" id="d_bar" style="width:0%"></div></div>
+        <div class="prob-row"><span>Purchase probability</span><span id="d_prob">—</span></div>
+        <div class="demo-tag" id="d_demo">⚡ Demo mode — run simple_api.py for real predictions</div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div class="card">
+        <div class="card-title"><i class="ti ti-calendar" style="font-size:13px;vertical-align:-1px;margin-right:4px"></i>Purchase rate by month (%)</div>
+        <div id="monthBars"></div>
+      </div>
+      <div class="card">
+        <div class="card-title"><i class="ti ti-list-numbers" style="font-size:13px;vertical-align:-1px;margin-right:4px"></i>Top feature importances</div>
+        <div id="featBars"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-grid">
+    <div class="card">
+      <div class="card-title"><i class="ti ti-chart-donut" style="font-size:13px;vertical-align:-1px;margin-right:4px"></i>Class distribution</div>
+      <div style="position:relative;width:100%;height:160px;"><canvas id="donutChart"></canvas></div>
+      <div style="display:flex;gap:16px;margin-top:10px;font-size:11px;color:#718096;">
+        <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:2px;background:#1e3a5f;display:inline-block"></span>Purchase 15.5%</span>
+        <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:2px;background:#cbd5e0;display:inline-block"></span>No purchase 84.5%</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><i class="ti ti-trophy" style="font-size:13px;vertical-align:-1px;margin-right:4px"></i>Model performance</div>
+      <div style="position:relative;width:100%;height:160px;"><canvas id="radarChart"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><i class="ti ti-bulb" style="font-size:13px;vertical-align:-1px;margin-right:4px"></i>Key signals</div>
+      <div class="tip-row"><span class="tip-k">Page values</span><span class="tip-v">Higher = strong intent</span></div>
+      <div class="tip-row"><span class="tip-k">Exit rate</span><span class="tip-v">Lower = more engaged</span></div>
+      <div class="tip-row"><span class="tip-k">Month</span><span class="tip-v">Nov/Dec = peak buying</span></div>
+      <div class="tip-row"><span class="tip-k">Visitor type</span><span class="tip-v">Returning buys 2x more</span></div>
+      <div class="tip-row"><span class="tip-k">Bounce rate</span><span class="tip-v">High = low intent</span></div>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const monthData=[{label:'Feb',val:8},{label:'Mar',val:18},{label:'May',val:17},{label:'Jun',val:12},{label:'Aug',val:10},{label:'Sep',val:13},{label:'Oct',val:14},{label:'Nov',val:24},{label:'Dec',val:22}];
+const featData=[{label:'Page values',val:28},{label:'Exit rates',val:12},{label:'Product pages',val:11},{label:'Bounce rates',val:10},{label:'Prod. duration',val:9},{label:'Month',val:7}];
+function buildBars(id,data,max){const el=document.getElementById(id);data.forEach(d=>{const pct=Math.round(d.val/max*100);el.innerHTML+=`<div class="bar-chart-row"><div class="bc-label">${d.label}</div><div class="bc-track"><div class="bc-fill" style="width:${pct}%"></div></div><div class="bc-val">${d.val}%</div></div>`;});}
+buildBars('monthBars',monthData,24);
+buildBars('featBars',featData,28);
+new Chart(document.getElementById('donutChart'),{type:'doughnut',data:{labels:['Purchase','No Purchase'],datasets:[{data:[15.5,84.5],backgroundColor:['#1e3a5f','#cbd5e0'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},cutout:'65%'}});
+new Chart(document.getElementById('radarChart'),{type:'radar',data:{labels:['Accuracy','Precision','Recall','F1'],datasets:[{data:[88,69,65,67],backgroundColor:'rgba(30,58,95,0.12)',borderColor:'#1e3a5f',pointBackgroundColor:'#1e3a5f',borderWidth:1.5}]},options:{responsive:true,maintainAspectRatio:false,scales:{r:{min:0,max:100,ticks:{stepSize:25,font:{size:10}},pointLabels:{font:{size:10}}}},plugins:{legend:{display:false}}}});
+async function dPredict(){
+  const btn=document.getElementById('d_btn');
+  btn.disabled=true;btn.textContent='Predicting…';
+  const p={Administrative:document.getElementById('d_adm').value,Administrative_Duration:80,Informational:document.getElementById('d_inf').value,Informational_Duration:0,ProductRelated:document.getElementById('d_pr').value,ProductRelated_Duration:document.getElementById('d_prd').value,BounceRates:document.getElementById('d_br').value,ExitRates:document.getElementById('d_er').value,PageValues:document.getElementById('d_pv').value,SpecialDay:document.getElementById('d_sd').value,Month:document.getElementById('d_mo').value,OperatingSystems:2,Browser:2,Region:1,TrafficType:2,VisitorType:document.getElementById('d_vt').value,Weekend:0};
+  let r,isDemo=false;
+  try{const res=await fetch('http://localhost:5000/predict',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(p)});r=await res.json();}
+  catch{isDemo=true;const pv=parseFloat(p.PageValues),br=parseFloat(p.BounceRates);const score=Math.min(95,Math.max(5,15+pv*1.2-br*80+(p.Month==='Nov'||p.Month==='Dec'?12:0)+(p.VisitorType==='Returning_Visitor'?8:0)));const buys=score>=40;r={prediction:buys?1:0,label:buys?'Purchase':'No Purchase',confidence:Math.round(buys?score:100-score),purchase_probability:Math.round(score)};}
+  const cls=r.prediction===1?'buy':'nobuy';
+  document.getElementById('d_result').className='result-box show';
+  document.getElementById('d_emoji').textContent=r.prediction===1?'🛍️':'🚶';
+  document.getElementById('d_lbl').textContent=r.label;
+  document.getElementById('d_lbl').className='result-lbl '+cls;
+  document.getElementById('d_conf_pct').textContent=r.confidence+'%';
+  document.getElementById('d_prob').textContent=r.purchase_probability+'%';
+  const bar=document.getElementById('d_bar');bar.className='bar-fill '+cls;
+  setTimeout(()=>bar.style.width=r.confidence+'%',50);
+  document.getElementById('d_demo').style.display=isDemo?'block':'none';
+  btn.disabled=false;btn.innerHTML='<i class="ti ti-player-play" style="font-size:13px;vertical-align:-1px;margin-right:4px"></i>Run prediction';
+}
+</script>
+</body>
+</html>
